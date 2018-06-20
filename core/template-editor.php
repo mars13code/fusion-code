@@ -41,8 +41,11 @@ CODEJS;
                             <ul>
                                 <li v-show="ajaxSession.length < 10">
                                     <form @submit.prevent="actLogin">
-                                        <input type="text" name="email" placeholder="email">
-                                        <input type="password" name="password" placeholder="password">
+                                        <input type="text" name="webdavHost" placeholder="webdav host" value="https://cloud.applh.com">
+                                        <input type="text" name="webdavRoot" placeholder="webdav root" value="/remote.php/webdav/">
+                                        <hr>
+                                        <input type="text" name="webdavLogin" placeholder="webdav login">
+                                        <input type="password" name="webdavPassword" placeholder="webdav password">
                                         <button type="submit">login</button>
                                     </form>
                                     <hr>
@@ -678,8 +681,53 @@ Vue.component('todo-item', {
         var filename = line.getAttribute('filename');
         var isDir = line.classList.contains('D');
         if (!isDir) {
-            Explorer.ajaxLoad(filename);
-            Explorer.updateOpen(filename);
+            //Explorer.ajaxLoad(filename);
+            //Explorer.updateOpen(filename);
+                    //event.preventDefault();
+            var host = Explorer.val("input[name=webdavHost]");
+            var root = Explorer.val("input[name=webdavRoot]");
+            var login = Explorer.val("input[name=webdavLogin]");
+            var password = Explorer.val("input[name=webdavPassword]");
+            // alert(email + '/' + password);
+            Explorer.ajax({ 
+                classForm:       'Test',
+                methodForm:      'getFile',
+                filename:         filename,
+                webdavHost:      host,
+                webdavRoot:      root,
+                webdavLogin:     login,
+                webdavPassword:  password
+            },
+            function (response){
+                json = {};
+                if (response["Test@getFile"])
+                {
+                    json = response["Test@getFile"];
+                }
+                if (json.filecontent !== undefined) {
+                    Explorer.vue.currentFile = filename;
+                    // go back to last focus line
+                    if (Explorer.vue.currentFile) 
+                    {
+                        var curLN = localStorage.getItem(Explorer.vue.currentFile);
+                    }
+                    // UPDATE CODE IN EDITOR
+                    Explorer.editorModel.setValue(json.filecontent);
+                    // KEEP EXTENSION
+                    if (json.codeLanguage !== undefined) {
+                        localStorage.setItem('ext@' + Explorer.vue.currentFile, json.codeLanguage);
+                        monaco.editor.setModelLanguage(Explorer.editorModel, json.codeLanguage);
+                    }
+
+                    if (curLN) {
+                        curLN = parseInt(curLN);
+                        Explorer.editor.revealLineInCenter(curLN);
+                        Explorer.editor.setPosition({column: 1, lineNumber: curLN});
+                        // console.log(curLN+':'+Explorer.vue.currentFile);
+                    }
+                }
+
+            });
         }
         else {
             this.toggleshow();
@@ -717,8 +765,8 @@ Explorer.vue = new Vue({
     recordSession:  'pizza-house-blue',
     recordSynchro:  "",
     recordReplayMs: 2000,
-    todos:          <?php echo json_encode($explorer->tabData, JSON_PRETTY_PRINT); ?>,
-    nextTodoId:     <?php echo 1+count($explorer->tabData) ?>,
+    todos:          [],
+    nextTodoId:     1,
     codeWindow:     'TEST WINDOW',
     tabWindow:      [],
     editorSelection:'',
@@ -847,13 +895,27 @@ Explorer.vue = new Vue({
     actLogin: function ()
     {
         //event.preventDefault();
-        var email = Explorer.val("input[name=email]");
-        var password = Explorer.val("input[name=password]");
+        var host = Explorer.val("input[name=webdavHost]");
+        var root = Explorer.val("input[name=webdavRoot]");
+        var login = Explorer.val("input[name=webdavLogin]");
+        var password = Explorer.val("input[name=webdavPassword]");
         // alert(email + '/' + password);
-        Explorer.ajaxLoad("json", { 
-            method:     'login',
-            loginE:      email,
-            loginP:      password
+        Explorer.ajax({ 
+            classForm:       'Test',
+            methodForm:      'listTabDir',
+            webdavHost:      host,
+            webdavRoot:      root,
+            webdavLogin:     login,
+            webdavPassword:  password
+        },
+        function(response){
+            console.log(response);
+            if (response["Test@listTabDir"])
+            {
+                Explorer.vue.todos = response["Test@listTabDir"];
+                Explorer.vue.ajaxSession = "FIXMEFIXMEFIXME";
+            }
+
         });
     },  
     actLogout: function ()
@@ -991,7 +1053,29 @@ require(['vs/editor/editor.main'], function() {
         localStorage.setItem(itemKey0, curCode);
         localStorage.setItem(itemKeyLN, curLN);
 
-        Explorer.ajaxLoad("save", curCode);
+        //Explorer.ajaxLoad("save", curCode);
+        var host = Explorer.val("input[name=webdavHost]");
+        var root = Explorer.val("input[name=webdavRoot]");
+        var login = Explorer.val("input[name=webdavLogin]");
+        var password = Explorer.val("input[name=webdavPassword]");
+        Explorer.ajax({ 
+            classForm:       'Test',
+            methodForm:      'saveFile',
+            content:         curCode,
+            filename:        Explorer.vue.currentFile,
+            webdavHost:      host,
+            webdavRoot:      root,
+            webdavLogin:     login,
+            webdavPassword:  password
+        },
+        function (response) {
+            json = {};
+            if (response["Test@saveFile"])
+            {
+                json = response["Test@saveFile"];
+                console.log(response);
+            }
+        });
 
 
     };
@@ -1112,6 +1196,32 @@ Explorer.actMouseMove = function (event)
     Explorer.menuBox.innerHTML = this.getAttribute("filename"); // + ' (' +event.pageX+ ',' +event.pageY+ ')';
     
 }
+
+
+Explorer.urlAjax = 'ajax';
+Explorer.ajax = function (objInfo, myCallback)
+{
+    formData = new FormData;
+    for(info in objInfo)
+    {
+        formData.append(info, objInfo[info]);
+    }
+
+    fetch(Explorer.urlAjax, {
+        method:          'POST',
+        credentials:     'include',
+        body:            formData
+    })
+    .then(function (response) {
+        console.log(response);
+        return response.json();
+    })
+    .then(function (json) {
+        myCallback(json);
+    });
+ 
+}
+ 
 </script>
 
     </body>

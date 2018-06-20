@@ -47,6 +47,17 @@ class Request
 
     }
 
+    // WARNING: CAN BE DANGEROUS!
+    function getInputCode ($name, $default="")
+    {
+        $result = $_REQUEST[$name] ?? $default;
+        // $result = strip_tags($result);
+        $result = trim($result);
+
+        return $result;
+
+    }
+
     //@end
     
 }

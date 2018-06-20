@@ -19,6 +19,6 @@ $objController->traiterForm($formGoal);
 
 if (isset($tabResponse))
 {
-    // echo json_encode($tabResponse);
+    echo json_encode($tabResponse, JSON_PRETTY_PRINT);
 }
 

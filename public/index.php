@@ -8,7 +8,8 @@ global $cmsDir;
 global $rootDir;
 // global $rootDir0;
 
-$rootDir0   = realpath(__DIR__ . "/../../");    // full path
+//$rootDir0   = realpath(__DIR__ . "/../../");    // full path
+$rootDir0   = realpath(__DIR__ . "/");    // full path
 $cmsDir     = "$rootDir0/fusion-code";               // full path
 $rootdir    = str_replace($_SERVER["DOCUMENT_ROOT"], "", realpath(__DIR__ . "/../")); // relative path
 

@@ -14,7 +14,10 @@ class Controller
     // constructor
     function __construct ()
     {
-        
+        // test to check versions and screen sharing
+        // and is it on real time?
+        // and how is it now?
+        // so there is no real time possible?
     }
 
     function ecrireOption($cle, $valeur)
