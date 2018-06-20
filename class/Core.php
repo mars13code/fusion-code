@@ -66,10 +66,18 @@ class Core
         return $this;
     }
 
-    function addCode ($curFile)
+    function addCode ($curFile, $key="")
     {
-        extract(pathinfo($curFile));
-        $this->tabCodeFile["$filename"] = $curFile;
+        if ($key == "")
+        {
+            extract(pathinfo($curFile));
+            $this->tabCodeFile["$filename"] = $curFile;    
+        }
+        else
+        {
+            $this->tabCodeFile["$key"] = $curFile;    
+        }
+        
         // sort the list of file to sequence
         ksort($this->tabCodeFile, SORT_NATURAL);
 

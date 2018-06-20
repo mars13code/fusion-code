@@ -20,7 +20,7 @@ Core::Core()
     ->setVar("cmsDir",      $cmsDir)   
     // core
     ->setPath([dirname(__DIR__)])
-    ->addCode(__DIR__."/../core/core-theme.php")    // add special core file
+    ->addCode(__DIR__."/../core/core-theme.php", "500-core-theme")    // add special core file
     ->loadCode()
     ->runCode()
     ;

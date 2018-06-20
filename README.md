@@ -14,3 +14,6 @@ C.O.D.E is a Web Cloud Open Development Environment.
 * Ajax + VueJS
 * PHP7
 * MySQL5
+
+
+* Monaco Editor (the same in Visual Studio Code)
