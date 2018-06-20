@@ -59,3 +59,5 @@ git push
 git status
 
 cd ../
+
+exit
