@@ -9,7 +9,7 @@ foreach($tabFusion as $dirFusion)
         $tabCode = [
             "cd $dirFusion",
             "git add -A",
-            "git commit -a -m \"commit $message\"",
+            "git commit -a -m 'commit $message'",
             "git push",
         ];
         foreach($tabCode as $code)
