@@ -1,3 +1,6 @@
+echo off
+
+echo %1
 
 cd ../
 
@@ -7,7 +10,7 @@ git status
 
 git add -A 
 
-git commit -a -m "test"
+git commit -a -m %1
 
 git push
 
@@ -21,33 +24,35 @@ git status
 
 git add -A 
 
-git commit -a -m "test"
+git commit -a -m %1
 
 git push
 
 git status
 
 cd ../
+
 cd fusion-plugin
 
 git status
 
 git add -A 
 
-git commit -a -m "test"
+git commit -a -m %1
 
 git push
 
 git status
 
 cd ../
+
 cd fusion-theme
 
 git status
 
 git add -A 
 
-git commit -a -m "test"
+git commit -a -m %1
 
 git push
 
