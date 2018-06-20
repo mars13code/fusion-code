@@ -36,6 +36,17 @@ class Request
 
         return $result;
     }
+
+    function getInput ($name, $default="")
+    {
+        $result = $_REQUEST[$name] ?? $default;
+        $result = strip_tags($result);
+        $result = trim($result);
+
+        return $result;
+
+    }
+
     //@end
     
 }

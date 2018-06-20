@@ -25,7 +25,7 @@ trait TraitOne
     
     public function __invoke($param)
     {
-        echo json_encode($param);
+        if ($param) echo json_encode($param);
         return $this;
     }
 
