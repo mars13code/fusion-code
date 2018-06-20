@@ -10,5 +10,10 @@ class Site
     {
         echo "(Site)";
         echo date("H:i:s");
+        Core::Core()
+            ->setPath([__DIR__])
+            ->loadCode()
+            ->runCode()
+            ;
     }
 }
