@@ -32,10 +32,12 @@ trait TraitCore
         $obj = self::getOne($className);
         $method = $tabArgument[0] ?? "";
         $tabParam = array_slice($tabArgument, 1);
+        // echo "($method)";
+        // var_dump($obj);
         // http://php.net/manual/fr/function.method-exists.php
         if (method_exists($obj, $method))
         {
-            $obj->$method($tabParam);
+            return $obj->$method($tabParam);
         }
         
         return $obj;

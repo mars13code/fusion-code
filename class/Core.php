@@ -22,7 +22,7 @@ class Core
     {
         self::$tabData["Core"] = $this; // auto singleton ?!
 
-        echo "(Core)";
+        // echo "(Core)";
     }
  
     function setPath ($tabPath)

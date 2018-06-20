@@ -8,8 +8,8 @@ class Site
     // constructor
     function __construct (...$tabParam)
     {
-        echo "(Site)";
-        echo date("H:i:s");
+        //echo "(Site)";
+        // echo date("H:i:s");
         Core::Core()
             ->setPath([__DIR__])
             ->loadCode()
