@@ -3,7 +3,10 @@
 // load functions
 require_once(__DIR__."/functions.php");
 
+loadClass();
+
 // add autolad for classes
+/*
 spl_autoload_register(function($className) {
     $classPath = realpath(__DIR__."/../class/");
     if ($classPath) {
@@ -15,4 +18,5 @@ spl_autoload_register(function($className) {
     }  
 
 });
+*/
 

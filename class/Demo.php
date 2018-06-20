@@ -1,14 +1,14 @@
 <?php
 
-// file:        Core.php
-// creation:    2018-06-20 17:46:09
+// file:        Demo.php
+// creation:    DATE_CREATION
 // licence:     MIT
 // author:      mars13.fr
 
-class Core
+class Demo
 {
     // TRAITS
-    use TraitCore;
+    use TraitOne;
     
     // PROPERTIES
     
@@ -17,7 +17,7 @@ class Core
     // constructor
     function __construct ()
     {
-        echo "(Core)";
+        
     }
     
     //@end
