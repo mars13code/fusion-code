@@ -11,7 +11,7 @@ class Site
         //echo "(Site)";
         // echo date("H:i:s");
         Core::Core()
-            ->setPath([__DIR__])
+            ->setPath([ dirname(__DIR__) ])   // fixme
             ->loadCode()
             ->runCode()
             ;
