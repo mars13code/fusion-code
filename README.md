@@ -8,7 +8,8 @@ C.O.D.E is a Web Cloud Open Development Environmeznt.
 
 ## Technologies
 
-* PHP7
 * Ajax + VueJS
+* PHP7
+* MySQL5
 
 
