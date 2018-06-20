@@ -24,6 +24,13 @@ class Core
 
         // echo "(Core)";
     }
+
+    function setVar ($key, $value)
+    {
+        self::set($key, $value);
+        // chain syntax
+        return $this;
+    }
  
     function setPath ($tabPath)
     {
@@ -59,6 +66,17 @@ class Core
         return $this;
     }
 
+    function addCode ($curFile)
+    {
+        extract(pathinfo($curFile));
+        $this->tabCodeFile["$filename"] = $curFile;
+        // sort the list of file to sequence
+        ksort($this->tabCodeFile, SORT_NATURAL);
+
+        // chain syntax
+        return $this;
+    }   
+
     function runCode ()
     {
         // print_r($this->tabCodeFile);
@@ -66,7 +84,10 @@ class Core
         foreach($this->tabCodeFile as $codeFile)
         {
             // should be unique ?
-            require_once($codeFile);
+            if (is_file($codeFile)) 
+            {
+                include_once($codeFile);
+            }
         }
 
         // chain syntax
