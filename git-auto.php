@@ -8,9 +8,13 @@ foreach($tabFusion as $dirFusion)
         $message = date("H-i-s");
         $tabCode = [
             "cd $dirFusion",
-            "git add -A",
-            "git commit -a -m 'commit $message'",
-            "git push",
+            __DIR__."\git-auto.bat",
+//            "git status",
+//            "git add -A",
+//            "git status",
+//            "git commit -m 'test'",
+//            "git status",
+//            "git push",
         ];
         foreach($tabCode as $code)
         {
