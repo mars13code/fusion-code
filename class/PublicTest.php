@@ -1,11 +1,11 @@
 <?php
 
-// file:        Test.php
-// creation:    2018-06-20 20:12:54
+// file:        PublicTest.php
+// creation:    2018-06-20 20:21:27
 // licence:     MIT
 // author:      mars13.fr
 
-class Test
+class PublicTest
 {
     // TRAITS
     use TraitOne;
@@ -19,11 +19,12 @@ class Test
     {
         
     }
-    
+
     function message ()
     {
         return date("H:i:s");
     }
+    
     //@end
     
 }
