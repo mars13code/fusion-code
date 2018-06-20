@@ -22,7 +22,19 @@ class Request
     
     function isAjax ()
     {
-        return false;
+        $result = false;
+
+        $uri = $_SERVER["REQUEST_URI"];
+        // http://php.net/manual/fr/function.parse-url.php
+        $tabUrl = parse_url($uri);
+        extract($tabUrl);
+        // http://php.net/manual/fr/function.pathinfo.php
+        $tabPath = pathinfo($path ?? "");
+        extract($tabPath);
+        // fixme:
+        if ($filename == "ajax") $result = true;
+
+        return $result;
     }
     //@end
     
